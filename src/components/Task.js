@@ -15,7 +15,7 @@ function Task({task, onDelete, onToggle}) {
                 />
            </h1>
            <p>{task.description}</p>
-           <code>{task.time}</code>
+           <code>{task.date}</code>
         </div>
     )
 }

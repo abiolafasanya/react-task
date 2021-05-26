@@ -12,22 +12,28 @@ function App() {
 
   const [tasks, setTasks] =useState([])
 
-  useEffect(() => {
-    const getTasks = async () => {
-      const serverTask = await fetchTasks()
-      setTasks(serverTask)
-    }
-    getTasks()
-  }, [])
+     useEffect(() => {
+     const getTasks = async () => {
+       const serverTask = await fetchTasks()
+       setTasks(serverTask)
+     }
+     getTasks()
+   }, [])
 
   // Fetch tasks Data
   const fetchTasks = async () => {
-    try{
-     const res = await fetch('https://express-tasks.herokuapp.com//tasks')
-     const data = await res.json()
-     return data
-    }
-    catch(err){
+    try {
+      const res = await fetch(`https://express-tasks.herokuapp.com/tasks`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      const data = await res.json()
+      console.log(data)
+      return data
+    } catch (err) {
       console.error(err.message)
     }
    }
@@ -35,7 +41,14 @@ function App() {
   // Fetch single task Data
   const fetchTask = async (id) => {
     try{
-     const res = await fetch(`https://express-tasks.herokuapp.com//task/${id}`)
+      const res = await fetch(`https://express-tasks.herokuapp.com/task/${id}`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
      const data = await res.json()
      return data
     }
@@ -44,9 +57,10 @@ function App() {
     }
    }
 
+
   // Add Task
 const addTask = async (task) => {
-  const res = await fetch('https://express-tasks.herokuapp.com//task', {
+  const res = await fetch(`https://express-tasks.herokuapp.com/tasks`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -59,7 +73,7 @@ const addTask = async (task) => {
 
   // Delete Task 
   const deleteTask = async (id) => {
-    await fetch(`https://express-tasks.herokuapp.com//task/${id}`,
+    await fetch(`https://express-tasks.herokuapp.com/task/${id}`,
     {
       method: 'DELETE'
     })
@@ -72,7 +86,7 @@ const addTask = async (task) => {
     const toggle = await fetchTask(id)
     const updatedToggle = {...toggle, reminder: !toggle.reminder}
 
-    const res = await fetch(`https://express-tasks.herokuapp.com//task/${id}`, {
+    const res = await fetch(`https://express-tasks.herokuapp.com/task/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
