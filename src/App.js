@@ -32,7 +32,7 @@ function App() {
       })
       const data = await res.json()
       console.log(data)
-      return data
+      return data.task
     } catch (err) {
       console.error(err.message)
     }
@@ -50,7 +50,7 @@ function App() {
         }
       })
      const data = await res.json()
-     return data
+     return data.task
     }
     catch(err){
       console.error(err.message)
